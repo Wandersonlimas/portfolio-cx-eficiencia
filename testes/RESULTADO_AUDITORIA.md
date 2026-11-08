@@ -1,7 +1,7 @@
 Auditoria técnica automatizada.
-Commit de origem: 068110440b0f3198d73f20aff00aa1d4af09b829
+Commit de origem: b4e0da48548810749b2f07f13af04d5b0a881d98
 Python: success
-Chromium: success
+Chromium: failure
 
 --- Logs dos testes Python ---
 test_contagens_e_consistencia (test_pipeline.TesteIndicadores.test_contagens_e_consistencia) ... ok
@@ -12,7 +12,7 @@ test_pdf_v51_reproduzivel (test_publicacao.TestPublicacao.test_pdf_v51_reproduzi
 test_scripts_ids_e_dados (test_publicacao.TestPublicacao.test_scripts_ids_e_dados) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.443s
+Ran 6 tests in 0.542s
 
 OK
 --- Logs do navegador ---
