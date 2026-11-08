@@ -18,11 +18,18 @@ A versão pública apresenta identidade visual clara em marfim, ameixa, lilás e
 
 Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. O painel foi reconstruído mantendo o algoritmo das métricas e as dimensões de filtro. O frontend é modular em `src/web/`, e `codigo/construir_dashboard.py` compila CSS, JavaScript e registros sintéticos em um único `index.html`.
 
+## Materiais atualizados do Case 01
+
+- [Relatório executivo V5.1 (PDF com 8 páginas)](entregaveis/Relatorio_Executivo_CX_V5_1.pdf): mesma identidade visual clara do dashboard, métricas sintéticas reconciliadas e links clicáveis para demonstração e repositório.
+- [Dashboard interativo V5.1](https://wandersonlimas.github.io/portfolio-cx-eficiencia/): painel ao vivo para navegação por recrutadores.
+- **LinkedIn:** o arquivo de mídia anteriormente anexado não se atualiza automaticamente quando o PDF do GitHub muda. Para publicar a nova versão no destaque, é necessário adicionar o PDF V5.1 como novo documento e retirar o antigo depois de validar a publicação.
+
 ## O que está incluído
 
 | Local | Conteúdo |
 |---|---|
-| `entregaveis/Relatorio_Executivo_CX_V2.pdf` | Relatório executivo de 8 páginas para a seção Em destaque do LinkedIn |
+| `entregaveis/Relatorio_Executivo_CX_V5_1.pdf` | Relatório executivo V5.1 em PDF, com o novo design e links clicáveis |
+| `entregaveis/Relatorio_Executivo_CX_V2.pdf` | Versão histórica do relatório executivo, com a identidade anterior |
 | `entregaveis/Dashboard_CX_Case_Tecnico_V4.html` | Dashboard V5.1 offline autocontido, idêntico à versão pública |
 | `entregaveis/Dashboard_CX_Case_Tecnico_V2.html` | Versão V2 anterior, preservada para histórico |
 | `index.html` | Dashboard V5.1 público, publicado pelo GitHub Pages na raiz `/` |
