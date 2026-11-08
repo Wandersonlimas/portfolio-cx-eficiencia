@@ -72,7 +72,8 @@ def title(c,over,heading,sub=None):
 def metric(c,x,y,w,h,label,value,detail,delta=None,negative=False):
     rect(c,x,y,w,h,WHITE,14,LINE)
     t(c,x+18,y+h-30,label.upper(),9,MUTED,True)
-    t(c,x+18,y+h-76,value,27,NAVY,True)
+    font_size=min(27, 27*(w-36)/max(1,pdfmetrics.stringWidth(str(value),FONT_BOLD,27)))
+    t(c,x+18,y+h-76,value,max(17,font_size),NAVY,True)
     p(c,x+18,y+25,detail,w-36,9,13,MUTED,max_lines=2)
     if delta is not None:
         right(c,x+w-16,y+h-28,delta,9,RED if negative else TEAL,True)
