@@ -1,201 +1,30 @@
-"""Cria dashboard HTML offline, com dados derivados da fonte sintética via ETL."""
+"""Compila o Case 01 V4 com frontend modular e dados sintéticos do ETL.
+Uso: python codigo/construir_dashboard.py
+"""
 import json
 from pathlib import Path
+from processar_etl import ler_validar
 
-CSS=r'''*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f2f5f7;color:#152839;font:14px/1.48 Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}button,select,input{font:inherit}button{cursor:pointer}.layout{display:flex;min-height:100vh}.side{width:248px;min-width:248px;position:sticky;top:0;height:100vh;background:#102233;color:#eaf5f6;padding:30px 22px;display:flex;flex-direction:column}.brand{font-size:12px;letter-spacing:3px;font-weight:850;color:#86d6ca}.brandtitle{margin:12px 0 3px;font-size:27px;line-height:1.14;letter-spacing:-1.2px;font-weight:850}.brandtitle strong{color:#4de3bd}.sidetag{font-size:12px;line-height:1.5;color:#a9bdc9}.side nav{margin-top:45px}.side a{display:block;color:#b5c7d1;padding:13px 15px;text-decoration:none;border-radius:12px;margin:5px 0}.side a:hover,.side a:focus{background:#244756;color:white}.side small{margin-top:auto;color:#a7c1c6;font-size:11px;line-height:1.7;border-top:1px solid #37515b;padding-top:20px}.main{padding:36px 44px 54px;width:calc(100% - 248px);max-width:1600px;margin:auto}.eyebrow{font-size:11px;letter-spacing:2px;color:#008779;font-weight:900;text-transform:uppercase}.headline{font-size:38px;letter-spacing:-1.7px;line-height:1.1;margin:8px 0 10px}.sub{font-size:15px;color:#5e7383;max-width:850px;line-height:1.7}.toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:22px}.filterbar{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:11px;padding:17px;background:white;border:1px solid #e0e8ee;border-radius:15px;margin:24px 0 15px}.filterbar label{font-size:11px;font-weight:800;color:#637d8c;text-transform:uppercase;letter-spacing:.8px}.filterbar select{width:100%;display:block;border:1px solid #d9e4e7;background:#f9fbfc;border-radius:10px;margin-top:6px;height:39px;padding:0 10px;color:#24394c}.notice{padding:13px 16px;background:#e3f4ed;border:1px solid #bae4d5;color:#24624f;border-radius:12px;font-size:12px;margin-bottom:22px}.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:33px 0 13px}.sectionhead h2{font-size:21px;letter-spacing:-.5px;margin:0}.hint{font-size:12px;color:#748897}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.kpi,.card{background:white;border:1px solid #e0e8ee;border-radius:17px;box-shadow:0 5px 24px #15364f07}.kpi{padding:20px}.kpi .name{font-size:11px;letter-spacing:1.3px;color:#718596;text-transform:uppercase;font-weight:900}.kpi .val{font-size:30px;font-weight:850;line-height:1.45;letter-spacing:-1.1px}.kpi .delta{font-size:12px;font-weight:750}.kpi .detail{color:#8193a0;font-size:11px;margin-top:5px}.neutral{color:#516b78}.good{color:#008f72}.bad{color:#bd5350}.charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{padding:23px}.chartHead{display:flex;justify-content:space-between;align-items:center}.chartHead h3,.card h3{font-size:16px;margin:0}.small{font-size:12px;color:#718696}.svgchart{width:100%;height:auto;display:block;margin-top:12px}.axes{font-size:11px;fill:#7f95a3}.gridline{stroke:#e9f0f2;stroke-width:1}.gridtwo{stroke:#bdd0d9;stroke-dasharray:3 4;stroke-width:1}.two{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.datatbl{width:100%;border-collapse:collapse;font-size:12px}.datatbl th{text-align:right;color:#8296a2;padding:10px 6px;border-bottom:1px solid #e8edef;white-space:nowrap}.datatbl td{text-align:right;border-bottom:1px solid #eef1f4;padding:11px 6px}.datatbl th:first-child,.datatbl td:first-child{text-align:left}.datatbl tr:last-child td{border-bottom:none}.datatbl td strong{color:#1a3549;font-size:12px}.barbg{height:6px;background:#eaf2f0;border-radius:8px;margin-top:7px;min-width:60px}.bar{height:6px;background:#10a48d;border-radius:8px}.insights{display:grid;gap:11px}.insight{display:flex;gap:12px;align-items:flex-start;padding:14px;background:#f4f8f8;border-radius:12px;border:1px solid #e5eded}.bullet{width:8px;height:8px;border-radius:50%;background:#13aa8d;flex:0 0 auto;margin-top:6px}.insight strong{font-size:12px}.insight p{margin:4px 0 0;font-size:12px;color:#617988;line-height:1.55}.scenario{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bigmoney{font-size:33px;letter-spacing:-1px;font-weight:850;color:#135f5a}.scope{font-size:12px;color:#6e8491}.range{width:100%;accent-color:#049981;margin:20px 0 10px}.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.method{background:white;border:1px solid #dce9e8;border-radius:14px;padding:18px}.method b{color:#183749}.method p{color:#68808f;font-size:12px;line-height:1.6}.foot{font-size:12px;color:#758a99;border-top:1px solid #d5e0e5;padding-top:21px;margin-top:35px}.download{border:1px solid #d1dfdc;background:#fff;border-radius:10px;padding:9px 13px;color:#157b70;font-weight:750;font-size:12px}.download:hover{background:#e8f5f0}@media(max-width:1140px){.side{width:210px;min-width:210px}.main{padding:25px;width:calc(100% - 210px)}.charts,.two{grid-template-columns:1fr}.kpi{padding:15px}.kpi .val{font-size:25px}}@media(max-width:720px){.layout{display:block}.side{width:auto;min-width:unset;height:auto;position:relative;padding:16px}.side nav,.side small,.sidetag{display:none}.brandtitle{font-size:22px;margin:6px 0}.main{width:100%;padding:20px 13px}.headline{font-size:30px}.toprow{display:block}.filterbar{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.methods,.scenario{grid-template-columns:1fr}.card{padding:16px}.datatbl{font-size:10px}.datatbl td strong{font-size:10px}.datatbl td,.datatbl th{padding:8px 3px}}
-/* Case 01 V3: identidade gráfica e experiência do usuário */
-:root{--v3-ink:#122840;--v3-deep:#0c1b2e;--v3-blue:#327dff;--v3-cyan:#15accf;--v3-muted:#72899d;--v3-line:#dce6f0;--v3-page:#f3f6fb}
-html{scroll-behavior:smooth}
-body{background:var(--v3-page);color:var(--v3-ink);font-size:14px;-webkit-font-smoothing:antialiased}
-.layout{display:block;min-height:100vh}
-.side{display:block;position:sticky;top:0;z-index:30;width:100%;min-width:0;height:auto;padding:0;background:linear-gradient(105deg,#0a1729,#182c45);color:#e8f5ff;box-shadow:0 8px 30px #122e4e24}
-.side .v3-top{max-width:1510px;margin:auto;padding:16px 34px;display:flex;justify-content:space-between;align-items:center;gap:14px}
-.v3-logo{width:43px;height:43px;border-radius:12px;background:linear-gradient(135deg,#367dff,#139bbd);display:grid;place-items:center;color:white;font-weight:850;letter-spacing:-.8px;font-size:17px;box-shadow:0 7px 16px #0d488443}
-.v3-brand{display:flex;align-items:center;gap:13px}
-.v3-brand strong{font-size:17px;font-weight:800;display:block;letter-spacing:-.4px}
-.v3-brand small{font-size:11px;color:#aec3d7;display:block;margin-top:1px}
-.v3-status{display:flex;align-items:center;gap:9px;color:#c3d6e8;font-size:11px}
-.v3-badge{border:1px solid #376174;border-radius:30px;padding:8px 11px;white-space:nowrap;background:#0e37424d;color:#aaf3e5}
-.v3-badge:before{content:"";display:inline-block;height:7px;width:7px;border-radius:50%;background:#4ce0c4;margin-right:7px}
-.v3-source{color:#d2e4f7!important;text-decoration:none;padding:7px 10px;border:1px solid #446078;border-radius:8px}
-.side nav{display:flex;align-items:center;gap:5px;max-width:1510px;margin:0 auto;padding:0 34px;border-top:1px solid #ffffff17;overflow-x:auto}
-.side a{display:block;padding:13px 16px;margin:0;border-radius:0;border-bottom:3px solid transparent;white-space:nowrap;font-size:12px;font-weight:730;color:#a9bdd0;text-decoration:none}
-.side a:hover,.side a:focus{background:#ffffff10;color:#fff}
-.side a.v3-active{color:#fff;border-bottom-color:#5cb5ff;background:#ffffff0b}
-.main{width:100%;max-width:1510px;margin:0 auto;padding:26px 34px 50px}
-.v3-toolbar{background:#fff;border:1px solid var(--v3-line);border-radius:16px;box-shadow:0 5px 22px #162c4407;padding:16px 18px 18px;margin-bottom:22px}
-.v3-toolbar-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:10px;font-size:11px;color:#7890a4}
-.v3-toolbar-head strong{color:#405d76;letter-spacing:1.4px;text-transform:uppercase;font-weight:850}
-.v3-filter-row{display:flex;gap:12px;align-items:end}
-.filterbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0;padding:0;flex:1;background:none;border:0;border-radius:0}
-.filterbar label{font-size:10px;letter-spacing:1.05px;font-weight:850;color:#6e8497}
-.filterbar select{height:43px;background:#f8fafd;border:1px solid #d6e2eb;border-radius:9px;color:#253d55;font-size:12px;font-weight:650;margin-top:6px}
-.v3-reset{height:43px;padding:0 15px;border:1px solid #ccdae8;border-radius:9px;color:#295071;background:#fff;font-weight:750;font-size:12px;white-space:nowrap}
-.v3-reset:hover{background:#eaf3ff}
-.v3-panel{display:none}
-.v3-panel.v3-active{display:block;animation:v3-rise .2s ease}
-@keyframes v3-rise{from{opacity:.8;transform:translateY(5px)}to{opacity:1;transform:none}}
-.headline{font-size:clamp(29px,3vw,42px);line-height:1.13;letter-spacing:-1.6px;color:#152f46;font-weight:850}
-.eyebrow{color:#2475e8;font-size:10px;letter-spacing:1.45px}
-.sub{color:#698298;font-size:14px;line-height:1.7;max-width:850px}
-.toprow{margin-top:7px}
-.notice{border-color:#b8e3db;background:#ebf7f3;color:#27695e;border-radius:10px}
-.sectionhead h2{font-size:18px;color:#24415a;letter-spacing:-.4px}
-.hint{font-size:11px;color:#7b8fa2}
-.kpis{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.kpi,.card,.method,.v3-signal{border:1px solid var(--v3-line);border-radius:15px;background:white;box-shadow:0 5px 20px #152f4c08}
-.kpi{padding:18px 17px;overflow:hidden;position:relative}
-.kpi:before{content:"";height:3px;position:absolute;inset:0 0 auto;background:#d5e3f5}
-.kpi.v3-volume:before{background:linear-gradient(90deg,#347cff,#20c4da)}
-.kpi .name{font-size:10px;letter-spacing:1px;color:#71879a}
-.kpi .val{font-size:clamp(23px,2vw,31px);line-height:1.3;color:#19374f;letter-spacing:-.9px;margin:7px 0 5px;font-variant-numeric:tabular-nums}
-.kpi.v3-volume .val{color:#2675ea}
-.kpi .delta{font-size:11px}.kpi .detail{font-size:10px;color:#8497a8}
-.v3-signals{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;margin-top:16px}
-.v3-signal{padding:20px;min-height:135px}
-.v3-signal strong{font-size:20px;display:block;color:#193a55;line-height:1.3;letter-spacing:-.6px}
-.v3-signal h3{margin:0 0 11px;color:#70879a;font-size:11px;font-weight:850;letter-spacing:.9px;text-transform:uppercase}
-.v3-signal p{font-size:12px;color:#8194a4;margin:7px 0 0;line-height:1.55}
-.v3-signal.main-signal{background:linear-gradient(130deg,#122b48,#193e65);border-color:#294e70}
-.v3-signal.main-signal h3{color:#a3c2dc}
-.v3-signal.main-signal strong{color:#fff}
-.v3-signal.main-signal p{color:#abc4d8}
-.charts{gap:14px}
-.card{padding:21px}
-.chartHead h3,.card h3{font-size:14px;color:#23435c}
-.small,.scope{font-size:11px;color:#748da1}
-.gridline{stroke:#e6edf4}.axes{fill:#8498a8}
-.two{grid-template-columns:1.12fr .88fr;gap:14px}
-.datatbl th{font-size:10px;background:#f6f9fc;border-bottom:1px solid #dce6ef;letter-spacing:.3px}
-.datatbl td{border-bottom:1px solid #edf2f7}
-.datatbl td strong{color:#20455f}
-.barbg{background:#e8f2fb}.bar{background:linear-gradient(90deg,#327dff,#20b4d1)}
-.insight{border-color:#e6edf4;background:#f6f9fc}
-.bullet{background:#327dff}
-.bigmoney{color:#2174f0;font-size:clamp(28px,3vw,42px)}
-.range{accent-color:#2c7bff}
-.methods{grid-template-columns:repeat(3,minmax(0,1fr))}
-.method{padding:19px}.method b{color:#234761}
-.v3-pipeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-bottom:18px}
-.v3-step{background:#122b48;border:1px solid #234f77;color:white;border-radius:11px;padding:17px 13px;min-height:91px}
-.v3-step small{font-size:10px;letter-spacing:1px;color:#73c4fa;display:block;margin-bottom:6px}
-.v3-step strong{font-size:12px}
-.foot{color:#7c92a5}
-.download{color:#256cd3}
-@media(max-width:1130px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.v3-signals{grid-template-columns:1fr 1fr}.v3-signal.main-signal{grid-column:1/-1}.v3-status .v3-badge{display:none}}
-@media(max-width:760px){.side .v3-top{padding:12px 15px}.v3-status{display:none}.side nav{padding:0 6px;gap:0}.side a{padding:12px 13px}.main{padding:16px 13px 34px}.v3-toolbar{padding:14px 12px}.v3-toolbar-head span{display:none}.v3-filter-row{display:block}.filterbar{grid-template-columns:repeat(2,minmax(0,1fr))}.v3-reset{width:100%;margin-top:11px}.headline{font-size:30px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:15px}.kpi .val{font-size:26px}.v3-signals,.charts,.scenario,.methods,.v3-pipeline{grid-template-columns:1fr}.v3-signal.main-signal{grid-column:auto}.card{padding:17px}.sectionhead{display:block}.hint{text-align:left}.datatbl td,.datatbl th{padding:9px 5px}}
-'''
+ROOT=Path(__file__).resolve().parents[1]
 
-JS=r'''"use strict";
-const RAW=window.DATA_ROWS;
-const $=id=>document.getElementById(id);
-const fields=['contatos','contatos_repetidos','nps_promotores','nps_neutros','nps_detratores','csat_positivas','csat_negativas','custo_variavel_centavos','custo_fixo_alocado_centavos'];
-const total=(rows)=>{const r=Object.fromEntries(fields.map(f=>[f,0]));for(const row of rows){for(const f of fields)r[f]+=row[f]};const n=r.nps_promotores+r.nps_neutros+r.nps_detratores;const c=r.csat_positivas+r.csat_negativas; r.nps=n?100*(r.nps_promotores-r.nps_detratores)/n:null;r.csat=c?100*r.csat_positivas/c:null;r.recontato=r.contatos?100*r.contatos_repetidos/r.contatos:null;r.cts=r.contatos?(r.custo_variavel_centavos+r.custo_fixo_alocado_centavos)/100/r.contatos:null;r.cvu=r.contatos?r.custo_variavel_centavos/100/r.contatos:null;return r;};
-const money=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n||0);
-const num=n=>new Intl.NumberFormat('pt-BR').format(Math.round(n||0));
-const dec=(n,d=1)=>n===null?'—':new Intl.NumberFormat('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
-const mm=s=>s.slice(5)+'/'+s.slice(2,4);
-const uniq=k=>[...new Set(RAW.map(r=>r[k]))];
-function fill(id,key){const e=$(id);uniq(key).forEach(v=>{let o=document.createElement('option');o.value=v;o.textContent=v;e.appendChild(o)})}
-fill('canal','canal');fill('motivo','motivo');fill('parceiro','parceiro');
-const allMonths=uniq('mes').sort();
-const rowsAt=(monthList)=>RAW.filter(r=>monthList.includes(r.mes)&&['canal','motivo','parceiro'].every(k=>$(k).value==='Todos'||r[k]===$(k).value));
-function selectedMonths(){let p=$('periodo').value;if(p==='6')return allMonths.slice(-6);if(p==='12')return allMonths.slice(-12);if(p==='2025')return allMonths.filter(v=>v.startsWith('2025'));if(p==='2026')return allMonths.filter(v=>v.startsWith('2026'));return allMonths}
-const by=(rows,key)=>{const o={};for(const r of rows){(o[r[key]]??=[]).push(r)}return Object.entries(o).map(([nome,sub])=>({nome,...total(sub)}))};
-const stat=(kind,val,prev)=>{let unit=kind==='nps'?' pts':kind==='cts'?'': '%',disp=kind==='cts'?money(val):dec(val,kind==='nps'?1:1)+unit;let delta=val-prev;let good=kind==='recontato'||kind==='cts'?delta<=0:delta>=0;let txt=kind==='cts'?money(Math.abs(delta)):(dec(Math.abs(delta),1)+(kind==='nps'?' pontos':' p.p.'));return {disp,change:(delta>=0?'+':'−')+txt,color:Math.abs(delta)<.001?'neutral':good?'good':'bad'};};
-function chart(id,values,type,labels,color,format){const svg=$(id);svg.innerHTML='';if(!values.length)return;let W=660,H=238, left=47,right=19,top=18,bottom=37;let low=Math.min(...values),high=Math.max(...values);let pad=Math.max((high-low)*.30,type==='cts'?.3:2.0);let ymin=Math.max(0,low-pad),ymax=high+pad;let x=i=>left+(W-left-right)*i/Math.max(1,values.length-1);let y=v=>top+(H-top-bottom)*(ymax-v)/(ymax-ymin);let ns='http://www.w3.org/2000/svg';const elem=(tag,att,txt)=>{const e=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(att||{}))e.setAttribute(k,v);if(txt!==undefined)e.textContent=txt;svg.appendChild(e);return e};for(let k=0;k<=4;k++){let yy=top+(H-top-bottom)*k/4;elem('line',{x1:left,x2:W-right,y1:yy,y2:yy,class:'gridline'});elem('text',{x:3,y:yy+4,class:'axes'},format(ymax-(ymax-ymin)*k/4))}
-let path=values.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');elem('path',{d:path+' L '+x(values.length-1)+','+(H-bottom)+' L '+x(0)+','+(H-bottom)+' Z',fill:color,opacity:'.10'});elem('path',{d:path,stroke:color,'stroke-width':3.2,fill:'none','stroke-linejoin':'round','stroke-linecap':'round'});for(let i=0;i<values.length;i++){if(i===0||i===values.length-1||i%Math.max(1,Math.floor(values.length/6))===0)elem('text',{x:x(i),y:H-11,class:'axes','text-anchor':'middle'},mm(labels[i]));let c=elem('circle',{cx:x(i),cy:y(values[i]),r:i===values.length-1?4.5:2.5,fill:color});let t=document.createElementNS(ns,'title');t.textContent=labels[i]+': '+format(values[i]);c.appendChild(t)} }
-function drawRows(id,items,cols){$(id).innerHTML='';for(const r of items){let tr=document.createElement('tr');for(const col of cols){const td=document.createElement('td');if(col==='nome'){let name=document.createElement('strong');name.textContent=r.nome;td.appendChild(name);if(r.participacao!==undefined){let bg=document.createElement('div');bg.className='barbg';let bar=document.createElement('div');bar.className='bar';bar.style.width=Math.min(100,r.participacao*100).toFixed(1)+'%';bg.appendChild(bar);td.appendChild(bg)}}else{td.textContent=col==='contatos'?num(r.contatos):col==='contatos_repetidos'?num(r.contatos_repetidos):col==='participacao'?dec(r.participacao*100)+'%':col==='cts'?money(r.cts):col==='nps'?dec(r.nps)+' pts':dec(r[col])+'%'}tr.appendChild(td)}$(id).appendChild(tr)}}
-let state={};
-function render(){let months=selectedMonths(), rows=rowsAt(months),s=total(rows);let cut=Math.floor(months.length/2);let prev=total(rowsAt(months.slice(0,cut))),recent=total(rowsAt(months.slice(cut)));let meas=[['nps','NPS','Voz do cliente'],['csat','CSAT','Satisfação das pesquisas'],['recontato','Recontato','Contatos marcados como retorno'],['cts','CTS','Custo total / contatos']];
-$('subtitlePeriod').textContent='Recorte '+mm(months[0])+' a '+mm(months[months.length-1])+' • '+num(s.contatos)+' contatos sintéticos • '+num(s.nps_promotores+s.nps_neutros+s.nps_detratores)+' pesquisas NPS';
-$('kpis').innerHTML=meas.map(([id,label,detail])=>{let st=stat(id,s[id],(recent[id]-prev[id])+s[id]);let trend=stat(id,recent[id],prev[id]);return `<div class="kpi"><div class="name">${label}</div><div class="val">${st.disp}</div><div class="delta ${trend.color}">${trend.change} na segunda metade</div><div class="detail">${detail}</div></div>`}).join('');
-let monthly=months.map(m=>({mes:m,...total(rows.filter(r=>r.mes===m))}));chart('chartNps',monthly.map(m=>m.nps),'nps',months,'#3179ff',v=>dec(v,1));chart('chartCts',monthly.map(m=>m.cts),'cts',months,'#1aa7d6',v=>dec(v,2));chart('chartRepeat',monthly.map(m=>m.recontato),'recontato',months,'#f1a857',v=>dec(v,1));chart('chartCsat',monthly.map(m=>m.csat),'csat',months,'#7b74d8',v=>dec(v,1));
-$('chartSub').textContent='Cada ponto representa a métrica agregada do mês, calculada sobre os respectivos volumes / respondentes.';
-let motivos=by(rows,'motivo').map(r=>({...r,participacao:s.contatos_repetidos?r.contatos_repetidos/s.contatos_repetidos:0})).sort((a,b)=>b.contatos_repetidos-a.contatos_repetidos);drawRows('motivosTable',motivos,['nome','contatos','recontato','participacao','cts']);
-let canais=by(rows,'canal').sort((a,b)=>b.contatos-a.contatos);drawRows('canaisTable',canais,['nome','contatos','recontato','nps','cts']);
-let top=motivos[0],largest=canais[0];let latest3=months.slice(-3),prior3=months.slice(-6,-3);let nowBy=by(rows.filter(r=>latest3.includes(r.mes)),'motivo'),wasBy=by(rows.filter(r=>prior3.includes(r.mes)),'motivo');let worsening=nowBy.map(r=>({...r,diff:r.recontato-(wasBy.find(x=>x.nome===r.nome)?.recontato??r.recontato)})).sort((a,b)=>b.diff-a.diff)[0];
-let insights=[];if(top)insights.push(`<strong>Maior volume de retornos: ${top.nome}</strong><p>${num(top.contatos_repetidos)} contatos marcados como retorno no recorte (${dec(top.participacao*100)}% dos retornos), com taxa de ${dec(top.recontato)}%. Volume absoluto não identifica a causa.</p>`);
-if(worsening&&prior3.length===3)insights.push(`<strong>Principal piora recente: ${worsening.nome}</strong><p>Nos três últimos meses versus os três anteriores, a taxa de recontato variou ${worsening.diff>=0?'+':'−'}${dec(Math.abs(worsening.diff))} p.p. Confirmar em amostra de casos, canal e parceiro antes de propor ação.</p>`);
-if(largest)insights.push(`<strong>Canal de maior volume: ${largest.nome}</strong><p>${num(largest.contatos)} contatos, CTS de ${money(largest.cts)}. Avaliar capacidade, mistura de motivos e eventuais transbordos antes de inferir oportunidade de eficiência.</p>`);
-insights.push('<strong>Limite da inferência</strong><p>Eventos modelados simulam fricção operacional. Correlação temporal não é demonstração causal; exigiria rastreio de processos, amostras de jornada e avaliação controlada.</p>');
-$('insights').innerHTML=insights.map(x=>'<div class="insight"><span class="bullet"></span><div>'+x+'</div></div>').join('');
-state={rows,s,months};updateScenario();
-}
-function updateScenario(){if(!state.s)return;let pct=+ $('reducao').value;let s=state.s;let pret= s.contatos_repetidos*pct/100;let saving=pret*s.cvu; $('pctReducao').textContent=pct+'%';$('scenarioContacts').textContent=num(pret);$('scenarioAmount').textContent=money(saving);$('scenarioBase').textContent=`${num(s.contatos_repetidos)} retornos × ${pct}% × ${money(s.cvu)} custo variável médio. Recorte: ${mm(state.months[0])}–${mm(state.months[state.months.length-1])}.`}
-for(const id of ['periodo','canal','motivo','parceiro'])$(id).addEventListener('change',render);$('reducao').addEventListener('input',updateScenario);
-$('exportBtn').addEventListener('click',()=>{const rows=state.rows;if(!rows||!rows.length)return;const names=Object.keys(rows[0]);let content='\uFEFF'+[names.join(';'),...rows.map(r=>names.map(k=>String(r[k]).replaceAll(';',',')).join(';'))].join('\r\n');const blob=new Blob([content],{type:'text/csv;charset=utf-8;'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CX_Recorte_Sintetico.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000)});
-render();
-/* Case 01 V3: navegação, experiência e leituras complementares, sem alterar fórmulas. */
-(function(){
- "use strict";
- const tabs=[["visao","Gerencial"],["tendencias","Tendências"],["ofensores","Diagnóstico"],["cenario","Cenários"],["metodo","Engenharia"]];
- const side=document.querySelector(".side");
- side.innerHTML='<div class="v3-top"><div class="v3-brand"><div class="v3-logo" aria-hidden="true">WL</div><div><strong>CX & Eficiência Operacional</strong><small>Portfólio técnico · Python / SQLite / Business Intelligence</small></div></div><div class="v3-status"><span class="v3-badge">Base 100% sintética</span><a class="v3-source" href="https://github.com/Wandersonlimas/portfolio-cx-eficiencia" target="_blank" rel="noopener">Código e arquitetura</a></div></div><nav aria-label="Seções do dashboard">'+tabs.map((t,i)=>'<a href="#'+t[0]+'" data-view="'+t[0]+'"'+(i?'':' class="v3-active"')+'>'+t[1]+'</a>').join("")+'</nav>';
- const main=document.querySelector(".main");
- const head=document.getElementById("visao");
- const originalBar=head.querySelector(".filterbar");
- const toolbar=document.createElement("div");
- toolbar.className="v3-toolbar";
- toolbar.innerHTML='<div class="v3-toolbar-head"><strong>Filtros de análise</strong><span id="v3-filter-status">Visão consolidada</span></div><div class="v3-filter-row"><button type="button" id="v3-reset" class="v3-reset">Limpar filtros</button></div>';
- toolbar.querySelector(".v3-filter-row").prepend(originalBar);
- main.insertBefore(toolbar,head);
- for(const [id] of tabs)document.getElementById(id).classList.add("v3-panel");
- const signals=document.createElement("div");
- signals.className="v3-signals";
- signals.innerHTML='<div class="v3-signal main-signal"><h3>Maior concentração de recontatos</h3><strong id="v3-priority">Avaliando recorte</strong><p id="v3-priority-note">Hipótese de investigação, não causa comprovada</p></div><div class="v3-signal"><h3>Contatos marcados como retorno</h3><strong id="v3-repeats">--</strong><p>Volume agregado na seleção atual</p></div><div class="v3-signal"><h3>Respondentes NPS</h3><strong id="v3-surveys">--</strong><p>Denominador do NPS no período filtrado</p></div>';
- head.appendChild(signals);
- const pipeline=document.createElement("div");pipeline.className="v3-pipeline";
- pipeline.innerHTML=[["01 / FONTE","CSV sintético"],["02 / QUALIDADE","Validação de chaves"],["03 / CONSULTA","SQLite + Python"],["04 / CAMADA BI","Métricas ponderadas"],["05 / ENTREGA","Dashboard + PDF"]].map(t=>'<div class="v3-step"><small>'+t[0]+'</small><strong>'+t[1]+'</strong></div>').join("");
- const met=document.getElementById("metodo");met.insertBefore(pipeline,met.querySelector(".methods"));
- function selectTab(key,hash){
-  if(!tabs.some(t=>t[0]===key))key="visao";
-  for(const [id] of tabs){
-   document.getElementById(id).classList.toggle("v3-active",id===key);
-   const link=side.querySelector('[data-view="'+id+'"]');link.classList.toggle("v3-active",id===key);
-   if(id===key)link.setAttribute("aria-current","page");else link.removeAttribute("aria-current");
-  }
-  if(hash)history.replaceState(null,"","#"+key);
-  window.scrollTo({top:0,behavior:"auto"});
- }
- side.querySelectorAll("[data-view]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();selectTab(a.dataset.view,true)}));
- function enrich(){
-  if(!state||!state.s)return;
-  const s=state.s,k=document.getElementById("kpis");
-  if(!k.querySelector(".v3-volume"))k.insertAdjacentHTML("afterbegin",'<div class="kpi v3-volume"><div class="name">Contatos analisados</div><div class="val"></div><div class="delta neutral">Total do filtro</div><div class="detail">Base operacional agregada</div></div>');
-  k.querySelector(".v3-volume .val").textContent=num(s.contatos);
-  document.getElementById("v3-repeats").textContent=num(s.contatos_repetidos);
-  document.getElementById("v3-surveys").textContent=num(s.nps_promotores+s.nps_neutros+s.nps_detratores);
-  document.getElementById("v3-filter-status").textContent=num(state.rows.length)+" registros agregados · "+num(s.contatos)+" contatos";
-  const top=by(state.rows,"motivo").sort((a,b)=>b.contatos_repetidos-a.contatos_repetidos)[0];
-  if(top){
-   document.getElementById("v3-priority").textContent=top.nome;
-   document.getElementById("v3-priority-note").textContent=num(top.contatos_repetidos)+" retornos • "+dec(top.recontato)+"% de taxa no motivo. Verifique contexto e mix de atendimento antes de inferir causas.";
-  }
- }
- for(const id of ["periodo","canal","motivo","parceiro"])document.getElementById(id).addEventListener("change",enrich);
- document.getElementById("v3-reset").addEventListener("click",()=>{
-  document.getElementById("periodo").value="6";
-  for(const id of ["canal","motivo","parceiro"])document.getElementById(id).value="Todos";
-  render();enrich();
- });
- enrich();
- selectTab(decodeURIComponent(location.hash.slice(1)),false);
- window.addEventListener("hashchange",()=>selectTab(decodeURIComponent(location.hash.slice(1)),false));
-})();
-'''
-
-def construir(base):
+def construir(base=ROOT):
     base=Path(base)
-    with (base/'dados'/'contatos_sinteticos.csv').open('r',encoding='utf-8') as f:
-        import csv
-        rows=list(csv.DictReader(f))
-    ints=['contatos','contatos_repetidos','nps_promotores','nps_neutros','nps_detratores','csat_positivas','csat_negativas','custo_variavel_centavos','custo_fixo_alocado_centavos']
-    for r in rows:
-        for k in ints:r[k]=int(r[k])
+    rows=ler_validar(base/'dados'/'contatos_sinteticos.csv')
+    if len(rows)!=792:
+        raise ValueError('Esperados 792 grupos sintéticos')
+    template=(base/'src'/'web'/'templates'/'dashboard.html').read_text(encoding='utf-8')
+    css=(base/'src'/'web'/'css'/'dashboard.css').read_text(encoding='utf-8')
+    js=(base/'src'/'web'/'js'/'dashboard.js').read_text(encoding='utf-8')
     data=json.dumps(rows,ensure_ascii=False,separators=(',',':')).replace('</','<\\/')
-    markup='''<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CX & Eficiência | Dashboard executivo · Case 01</title><style>'''+CSS+'''</style></head><body><div class="layout"><aside class="side"><div class="brand">WANDERSON LIMAS</div><div class="brandtitle">INTELIGÊNCIA<br><strong>EM DADOS.</strong></div><div class="sidetag">Case técnico • CX, dados e eficiência</div><nav><a href="#visao">01. Visão executiva</a><a href="#tendencias">02. Séries mensais</a><a href="#ofensores">03. Ofensores e recortes</a><a href="#cenario">04. Cenário de eficiência</a><a href="#metodo">05. Método e limites</a></nav><small>BASE 100% SINTÉTICA<br>Jan/2025 a Out/2026<br>Sem dados internos de empresas, clientes ou marcas.</small></aside><main class="main"><header id="visao"><div class="toprow"><div><div class="eyebrow">Portfólio técnico / Business Intelligence & CX</div><h1 class="headline">CX em números.<br>Decisões rastreáveis.</h1><div class="sub">Um estudo reproduzível de atendimento, custos e experiência do cliente. Os indicadores nascem de uma base sintética agregada, com métricas ponderadas e situações de degradação operacional.</div></div></div><div class="filterbar"><label>Período<select id="periodo"><option value="6">Últimos 6 meses</option><option value="12">Últimos 12 meses</option><option value="2026">2026 até outubro</option><option value="2025">Ano de 2025</option><option value="all">Todo o período</option></select></label><label>Canal<select id="canal"><option value="Todos">Todos os canais</option></select></label><label>Motivo de contato<select id="motivo"><option value="Todos">Todos os motivos</option></select></label><label>Operador<select id="parceiro"><option value="Todos">Todos os operadores</option></select></label></div><div class="notice"><strong>Atenção: base 100% fictícia.</strong> Valores, acontecimentos e recomendações têm finalidade exclusivamente demonstrativa. Não representam resultados reais nem desempenho de qualquer instituição.</div><div class="sectionhead"><h2>Indicadores executivos</h2><span id="subtitlePeriod" class="hint"></span></div><div id="kpis" class="kpis"></div></header><section id="tendencias"><div class="sectionhead"><h2>01 / Tendências e sinais</h2><span class="hint">O comportamento mensal importa mais que o número isolado</span></div><div class="charts"><div class="card"><div class="chartHead"><h3>NPS • Pontos</h3><span class="small">Promotores − detratores / respostas</span></div><svg id="chartNps" class="svgchart" viewBox="0 0 660 238" role="img" aria-label="Evolução mensal do NPS"></svg></div><div class="card"><div class="chartHead"><h3>CTS • R$ por contato</h3><span class="small">Custos totais / contatos</span></div><svg id="chartCts" class="svgchart" viewBox="0 0 660 238" role="img" aria-label="Evolução mensal do custo por contato"></svg></div><div class="card"><div class="chartHead"><h3>Taxa de recontato • %</h3><span class="small">Contatos repetidos / contatos</span></div><svg id="chartRepeat" class="svgchart" viewBox="0 0 660 238" role="img" aria-label="Evolução mensal do recontato"></svg></div><div class="card"><div class="chartHead"><h3>CSAT • %</h3><span class="small">Pesquisas positivas / respostas</span></div><svg id="chartCsat" class="svgchart" viewBox="0 0 660 238" role="img" aria-label="Evolução mensal de satisfação"></svg></div></div><p class="scope" id="chartSub"></p></section><section id="ofensores"><div class="sectionhead"><h2>02 / Ofensores e segmentação</h2><span class="hint">Priorize volume e taxa de retorno, não apenas uma métrica</span></div><div class="two"><div class="card"><h3>Motivos que concentram retornos</h3><p class="small">Participação no total de contatos marcados como recontato do recorte filtrado.</p><div style="overflow:auto"><table class="datatbl"><thead><tr><th>Motivo</th><th>Contatos</th><th>Retorno</th><th>Contrib.</th><th>CTS</th></tr></thead><tbody id="motivosTable"></tbody></table></div></div><div class="card"><h3>Comparativo de canais</h3><p class="small">Métricas recalculadas pelos próprios denominadores ao aplicar filtros.</p><div style="overflow:auto"><table class="datatbl"><thead><tr><th>Canal</th><th>Contatos</th><th>Retorno</th><th>NPS</th><th>CTS</th></tr></thead><tbody id="canaisTable"></tbody></table></div><h3 style="margin-top:29px">Leituras para investigação</h3><div class="insights" id="insights"></div></div></div></section><section id="cenario"><div class="sectionhead"><h2>03 / Cenário de eficiência</h2><span class="hint">Simulação aritmética, não previsão de economia</span></div><div class="scenario"><div class="card"><h3>Quanto custariam os contatos repetidos evitáveis?</h3><p class="small">Escolha a proporção hipotética de recontatos que poderia ser evitada. O cálculo usa somente o custo variável médio, sem prometer redução de orçamento ou melhoria de NPS.</p><label style="display:block;font-weight:750;margin-top:20px">Redução hipotética: <span id="pctReducao">20%</span></label><input class="range" type="range" id="reducao" min="5" max="40" value="20" step="5" aria-label="Percentual hipotético de redução de recontatos"><div class="scope" id="scenarioBase"></div></div><div class="card"><div class="eyebrow">Exposição operacional potencial</div><div class="bigmoney" id="scenarioAmount"></div><div class="scope">Proxy de custo variável associado aos retornos hipoteticamente evitados no período selecionado.</div><div style="height:19px"></div><div class="eyebrow">Contatos repetidos no cenário</div><h2 style="font-size:27px;margin:8px 0" id="scenarioContacts"></h2><div class="scope">Sem avaliação de viabilidade, custo da intervenção, elasticidade ou capacidade realmente desmobilizável.</div></div></div></section><section id="metodo"><div class="sectionhead"><h2>04 / Método e integridade</h2></div><div class="methods"><div class="method"><b>01. Origem dos dados</b><p>792 linhas agregadas: 22 meses × 3 canais × 6 motivos × 2 operadores. Dados gerados por Python com semente fixa, sem dados pessoais.</p></div><div class="method"><b>02. Tratamento e validação</b><p>Checagem de chaves, não negatividade, restrições de contagem e fechamento de custos. Agregação em SQLite e conferência cruzada com Python.</p></div><div class="method"><b>03. Métricas corretas</b><p>NPS e CSAT agregados por respondentes. Recontato por contatos. CTS por custo total dividido por volume, sem média simples de percentuais.</p></div><div class="method"><b>04. Eventos simulados</b><p>Jul/25: Pix. Mar/26: autenticação. Ago-Set/26: cartões. São hipóteses programadas na geração, não ocorrências observadas em empresas reais.</p></div><div class="method"><b>05. Limitações</b><p>Pesquisas e recontatos são aproximações agregadas. Não há amostragem real, identificação de cliente, SLA auditado ou evidência causal.</p></div><div class="method"><b>06. Rastreabilidade</b><p>O pacote contém CSV, scripts Python, consultas SQL, testes, documentação das métricas e relatório executivo PDF. Tudo pode ser reproduzido.</p></div></div><div class="sectionhead"><h2>Exportação do recorte</h2><button id="exportBtn" class="download">Baixar base sintética filtrada (CSV)</button></div><p class="scope">O download inclui apenas linhas sintéticas no filtro atual e pode ser conferido contra o arquivo original. O HTML funciona offline e não realiza chamadas externas.</p></section><footer class="foot">Wanderson Limas • Portfólio de análise de dados e gestão operacional • Versão demonstrativa V3 • Atribuição: construção assistida por IA, com métricas e dados reproduzíveis. Nenhum resultado aqui é conquista profissional real.</footer></main></div><script>window.DATA_ROWS='''+data+''';</script><script>'''+JS+'''</script></body></html>'''
-    (base/'entregaveis'/'Dashboard_CX_Case_Tecnico_V2.html').write_text(markup,encoding='utf-8')
-    (base/'index.html').write_text(markup,encoding='utf-8')  # GitHub Pages: main / (root)
+    for token in ('{{CSS}}','{{JS}}','{{DATA}}'):
+        if template.count(token)!=1:
+            raise ValueError('Token ausente/duplicado: '+token)
+    html=template.replace('{{CSS}}',css).replace('{{JS}}',js).replace('{{DATA}}',data)
+    if 'window.DATA_ROWS=' not in html:
+        raise ValueError('Dados não foram incorporados')
+    (base/'index.html').write_text(html,encoding='utf-8')
+    (base/'entregaveis'/'Dashboard_CX_Case_Tecnico_V4.html').write_text(html,encoding='utf-8')
+    return html
 
-if __name__=='__main__':construir(Path(__file__).resolve().parent.parent)
+if __name__=='__main__':
+    print('Dashboard V4 gerado:',len(construir()),'caracteres')
