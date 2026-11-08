@@ -22,7 +22,9 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 
 - [Relatório executivo V5.1 (PDF com 8 páginas)](entregaveis/Relatorio_Executivo_CX_V5_1.pdf): mesma identidade visual clara do dashboard, métricas sintéticas reconciliadas e links clicáveis para demonstração e repositório.
 - [Dashboard interativo V5.1](https://wandersonlimas.github.io/portfolio-cx-eficiencia/): painel ao vivo para navegação por recrutadores.
-- **LinkedIn:** o arquivo de mídia anteriormente anexado não se atualiza automaticamente quando o PDF do GitHub muda. Para publicar a nova versão no destaque, é necessário adicionar o PDF V5.1 como novo documento e retirar o antigo depois de validar a publicação.
+- **LinkedIn:** o dashboard e o relatório V5.1 já foram substituídos na seção Em destaque. Mudanças futuras em documentos anexados exigem nova publicação do arquivo no LinkedIn.
+
+**Arquivos HTML antigos:** as versões V2 e V4 foram retiradas da branch principal. Para consultar versões anteriores, utilize o histórico de commits do GitHub. O arquivo offline atual é exclusivamente `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html`.
 
 ## O que está incluído
 
@@ -30,17 +32,16 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 |---|---|
 | `entregaveis/Relatorio_Executivo_CX_V5_1.pdf` | Relatório executivo V5.1 em PDF, com o novo design e links clicáveis |
 | `entregaveis/Relatorio_Executivo_CX_V2.pdf` | Versão histórica do relatório executivo, com a identidade anterior |
-| `entregaveis/Dashboard_CX_Case_Tecnico_V4.html` | Dashboard V5.1 offline autocontido, idêntico à versão pública |
-| `entregaveis/Dashboard_CX_Case_Tecnico_V2.html` | Versão V2 anterior, preservada para histórico |
+| `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html` | Dashboard V5.1 offline autocontido, idêntico à versão pública |
 | `index.html` | Dashboard V5.1 público, publicado pelo GitHub Pages na raiz `/` |
 | `dados/contatos_sinteticos.csv` | Fonte agregada com 792 observações |
 | `dados/indicadores_processados.json` | Resultados agregados via SQL e Python |
 | `codigo/gerar_dados.py` | Gerador sintético com semente fixa `20261108` |
 | `codigo/processar_etl.py` | Valida dados, agrega SQLite, calcula métricas ponderadas e exporta JSON |
 | `codigo/consultas.sql` | Exemplos de queries reexecutáveis no SQLite após criação da tabela |
-| `codigo/construir_dashboard.py` | Compila a interface V4 a partir do frontend modular e do CSV validado |
+| `codigo/construir_dashboard.py` | Compila a interface V5.1 a partir do frontend modular e do CSV validado |
 | `codigo/gerar_relatorio.py` | Gera o PDF a partir do CSV processado |
-| `src/web/templates/dashboard.html` | Estrutura HTML editável e documentada do dashboard V4 |
+| `src/web/templates/dashboard.html` | Estrutura HTML editável e documentada do dashboard V5.1 |
 | `src/web/css/dashboard.css` | Design system responsivo em CSS puro |
 | `src/web/js/dashboard.js` | Filtros, séries, KPIs, exportação, análises e simulador |
 | `codigo/executar_projeto.py` | Pipeline completo |
@@ -49,7 +50,7 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 
 ## Executar no Mac
 
-**Para apenas visualizar**, acesse o [dashboard online](https://wandersonlimas.github.io/portfolio-cx-eficiencia/) ou abra `entregaveis/Dashboard_CX_Case_Tecnico_V4.html` no Chrome. Ele funciona offline, sem acesso à rede. Use os filtros de período, canal, motivo e operador e o simulador de redução de recontatos.
+**Para apenas visualizar**, acesse o [dashboard online](https://wandersonlimas.github.io/portfolio-cx-eficiencia/) ou abra `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html` no Chrome. Ele funciona offline, sem acesso à rede. Use os filtros de período, canal, motivo e operador e o simulador de redução de recontatos.
 
 **Para reproduzir os dados, dashboard e PDF**, é necessário Python 3 e ReportLab:
 
@@ -69,7 +70,7 @@ python codigo/executar_projeto.py
 python -m unittest discover -s testes -v
 ```
 
-O gerador usa semente determinística, de modo que os valores serão os mesmos na mesma versão do Python. O gerador atualiza `index.html` e o HTML offline. O PDF continua sendo o relatório executivo V2, identificado como documento histórico, não uma nova edição visual. O dashboard V4 possui arquivo offline independente.
+O gerador usa semente determinística, de modo que os valores serão reproduzíveis com as mesmas dependências e dados. `codigo/construir_dashboard.py` atualiza `index.html` e a cópia offline `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html`. O script `codigo/gerar_relatorio.py` ainda gera o **relatório histórico V2**, enquanto o PDF visual V5.1 está disponível como entrega consolidada, não sendo gerado por esse script. O `index.html` da raiz continua sendo a fonte publicada pelo GitHub Pages.
 
 ## Como interpretar o dashboard
 
@@ -82,7 +83,7 @@ O gerador usa semente determinística, de modo que os valores serão os mesmos n
 ## Publicar no LinkedIn
 
 1. Revise o PDF, confirme que domina os cálculos e adapte a redação à sua experiência.
-2. No LinkedIn, entre em **Em destaque** e atualize o link do dashboard para a versão V4; mantenha o PDF V2 identificado como relatório complementar, para evitar duplicação.
+2. No LinkedIn, mantenha o link público do dashboard V5.1 e o relatório executivo V5.1. O arquivo PDF histórico V2 não deve ser usado na apresentação atual.
 3. Título recomendado: **CX e Eficiência Operacional | Case técnico demonstrativo (dados sintéticos)**.
 4. Descrição recomendada: **Estudo de BI e análise operacional com dados sintéticos. Inclui modelo de dados, ETL reproduzível em Python/SQLite, análise de NPS, CSAT, recontato e CTS, segmentações e simulações ilustrativas. Desenvolvido com apoio de ferramentas de IA. Não representa resultados reais de empresas.**
 5. Para exibir o dashboard **interativo** nos Destaques, adicione o link público do GitHub Pages. Não é possível rodar código HTML diretamente como documento no LinkedIn.
