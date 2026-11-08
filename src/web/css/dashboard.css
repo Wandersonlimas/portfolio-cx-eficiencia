@@ -163,3 +163,254 @@ body{background:var(--bg);color:var(--text);font-size:14px}
 .panel{padding:18px 15px}
 .footer span:last-child{text-align:left}
 }
+
+
+/* V5.1 | Layout de navegação lateral. Mantém a paleta marfim, ameixa, lavanda e coral. */
+@media(min-width:981px){
+  .shell{
+    display:grid;
+    grid-template-columns:252px minmax(0,1fr);
+    align-items:stretch;
+    min-height:100vh;
+  }
+  .sidebar{
+    position:sticky;
+    top:0;
+    left:auto;
+    align-self:start;
+    width:252px;
+    height:100vh;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:hidden;
+    overflow-y:auto;
+    padding:27px 16px 19px;
+    background:#f2ecf4;
+    border:0;
+    border-right:1px solid #e3d9e7;
+    box-shadow:none;
+    backdrop-filter:none;
+  }
+  .brand{
+    flex:none;
+    align-items:center;
+    gap:12px;
+    padding:3px 10px 29px;
+    white-space:normal;
+  }
+  .brand strong{font-size:16px;letter-spacing:.4px}
+  .brand small{font-size:8.5px;letter-spacing:1.15px}
+  .sidebar-label{
+    display:block;
+    padding:0 10px;
+    margin:0 0 12px;
+    color:#9a839e;
+    font-size:10px;
+    letter-spacing:1.35px;
+    font-weight:820;
+  }
+  .sidebar-project{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 12px;
+    margin:0 1px 31px;
+    border:1px solid #e3d7e7;
+    background:#fffafd;
+    border-radius:12px;
+    box-shadow:0 3px 12px #4a29550a;
+  }
+  .sidebar-project strong{font-size:12px;line-height:1.4;color:#4e3c57}
+  .sidebar-project small{display:block;font-size:10px;color:#97869c;margin-top:2px}
+  .project-icon{color:#926fa8;font-size:22px;line-height:1}
+  .nav-caption{
+    display:block;
+    padding:0 11px;
+    margin:0 0 11px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:#a28ca5;
+    font-weight:820;
+  }
+  .menu{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:5px;
+    width:100%;
+    padding:0;
+    min-width:0;
+    overflow:visible;
+  }
+  .nav-item{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    gap:11px;
+    width:100%;
+    min-width:0;
+    padding:13px 12px;
+    border:1px solid transparent;
+    border-radius:10px;
+    text-align:left;
+    font-weight:720;
+    font-size:12px;
+    white-space:normal;
+    color:#7e6b85;
+  }
+  .nav-item:hover{color:#5d426a;background:#f9f5fa}
+  .nav-item.active{
+    color:#553a65;
+    background:#e7daed;
+    border-color:#d9c7e2;
+    box-shadow:inset 3px 0 0 #79528e;
+  }
+  .nav-glyph{
+    display:block;
+    width:20px;
+    flex:none;
+    text-align:center;
+    font-size:18px;
+    color:#9d80ab;
+  }
+  .nav-item.active .nav-glyph{color:#74528b}
+  .nav-index{
+    display:block;
+    margin-left:auto;
+    color:#ac96b0;
+    font-size:10px;
+    font-weight:750;
+  }
+  .nav-item.active .nav-index{color:#75558a}
+  .side-bottom{
+    display:block;
+    margin-top:auto;
+    padding-top:25px;
+  }
+  .side-status{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    margin:0 1px 12px;
+    background:#faf6fb;
+    border:1px solid #e3d8e7;
+    border-radius:10px;
+  }
+  .side-status .pulse{
+    background:#b48bc3;
+    box-shadow:0 0 0 4px #ad8abe24;
+  }
+  .side-status b{color:#765b81;font-size:10px;letter-spacing:.85px}
+  .side-status small{color:#9c8b9e;font-size:10px;display:block;margin-top:3px}
+  .repo-link{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 11px;
+    color:#745a7d;
+    font-size:11px;
+  }
+  .repo-link:hover{color:#4f355e}
+  .repo-link span{font-size:16px}
+  .side-signature{
+    display:flex;
+    justify-content:space-between;
+    margin-top:7px;
+    padding:15px 7px 0;
+    border-top:1px solid #dfd4e4;
+    color:#a092a4;
+    font-size:9px;
+    letter-spacing:.65px;
+  }
+  .workspace{min-width:0;width:100%;background:var(--bg)}
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    height:60px;
+    padding:0 27px;
+    background:#fffcff;
+    border:0;
+    border-bottom:1px solid #ece4eb;
+  }
+  .breadcrumbs{color:#958699;font-size:10px}
+  .breadcrumbs strong{color:#634e6c}
+  .crumb-sep{color:#c5b5c8}
+  .topbar-clock{color:#9c899e}
+  .data-pill{
+    color:#775d83;
+    background:#f6f0f8;
+    border:1px solid #e6daeb;
+    border-radius:30px;
+    font-size:9px;
+  }
+  .data-pill .pulse{background:#b08abc;box-shadow:none}
+  .topbar-github{
+    color:#654879;
+    border:1px solid #e6d8e9;
+    background:#faf6fb;
+    border-radius:8px;
+  }
+  .mobile-menu{display:none}
+  .content{max-width:1470px;padding:29px 28px 40px}
+  .intro h1{font-size:clamp(28px,2.8vw,40px)}
+  .intro p{max-width:740px}
+  .dashboard-grid{grid-template-columns:minmax(0,1.58fr) minmax(270px,.85fr)}
+}
+@media(min-width:981px) and (max-width:1250px){
+  .shell{grid-template-columns:220px minmax(0,1fr)}
+  .sidebar{width:220px;padding:23px 11px 17px}
+  .brand{padding:3px 8px 22px}
+  .nav-item{padding:11px 9px}
+  .sidebar-project{padding:12px 9px}
+  .content{padding:25px 21px 33px}
+  .kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .dashboard-grid{grid-template-columns:minmax(0,1fr)}
+  .topbar{padding:0 21px}
+}
+@media(max-width:980px){
+  .shell{display:block;min-height:100vh}
+  .sidebar{
+    position:sticky;
+    top:0;
+    left:auto;
+    display:block;
+    width:100%;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    padding:11px 0 0;
+    background:#fffdfa;
+    border-right:0;
+    border-bottom:1px solid #e4dbe7;
+    box-shadow:0 4px 15px #55425c0a;
+    backdrop-filter:none;
+  }
+  .brand{padding:0 16px 10px}
+  .sidebar-label,.sidebar-project,.nav-caption,.side-bottom{display:none}
+  .menu{
+    display:flex;
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    gap:4px;
+    overflow-x:auto;
+    padding:0 10px;
+    width:100%;
+  }
+  .nav-item{
+    flex:none;
+    width:auto;
+    white-space:nowrap;
+    border-radius:8px 8px 0 0;
+    padding:11px 12px;
+    font-size:11px;
+  }
+  .nav-glyph,.nav-index{display:none}
+  .topbar{display:none}
+  .content{padding:22px 16px 32px}
+}
