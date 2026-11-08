@@ -1,4 +1,4 @@
-"""Compila o Case 01 V4 com frontend modular e dados sintéticos do ETL.
+"""Compila o Case 01 V5 com frontend modular e dados sintéticos do ETL.
 Uso: python codigo/construir_dashboard.py
 """
 import json
@@ -19,7 +19,13 @@ def construir(base=ROOT):
     for token in ('{{CSS}}','{{JS}}','{{DATA}}'):
         if template.count(token)!=1:
             raise ValueError('Token ausente/duplicado: '+token)
+    if '</script' in js.lower():
+        raise ValueError('Script de fechamento indevido dentro do JavaScript')
     html=template.replace('{{CSS}}',css).replace('{{JS}}',js).replace('{{DATA}}',data)
+    if html.count('<script>') != 2 or html.count('</script>') != 2:
+        raise ValueError('HTML gerado contém scripts desbalanceados')
+    if any(tok in html for tok in ('{{CSS}}', '{{JS}}', '{{DATA}}')):
+        raise ValueError('Template não foi totalmente resolvido')
     if 'window.DATA_ROWS=' not in html:
         raise ValueError('Dados não foram incorporados')
     (base/'index.html').write_text(html,encoding='utf-8')
@@ -27,4 +33,4 @@ def construir(base=ROOT):
     return html
 
 if __name__=='__main__':
-    print('Dashboard V4 gerado:',len(construir()),'caracteres')
+    print('Dashboard V5 gerado:',len(construir()),'caracteres')
