@@ -42,7 +42,7 @@ class TestPublicacao(unittest.TestCase):
     def test_scripts_ids_e_dados(self):
         parser=HTMLInfo();parser.feed(self.html)
         self.assertEqual(len(parser.ids),len(set(parser.ids)))
-        scripts=[m.group(2) for m in re.finditer(r'<script([^>]*)>([\\s\\S]*?)</script>',self.html,re.I)]
+        scripts=[m.group(2) for m in re.finditer(r'<script([^>]*)>([\s\S]*?)</script>',self.html,re.I)]
         self.assertEqual(len(scripts),2)
         self.assertIn('window.DATA_ROWS=',scripts[0])
         rows=json.loads(scripts[0].split('window.DATA_ROWS=',1)[1].rstrip().removesuffix(';'))
