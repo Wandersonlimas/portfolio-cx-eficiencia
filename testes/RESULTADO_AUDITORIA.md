@@ -1,7 +1,7 @@
 Auditoria técnica automatizada.
-Commit de origem: b4e0da48548810749b2f07f13af04d5b0a881d98
+Commit de origem: 3fb5f4987dac8f2ecab8f4be296fbdc1e4217df2
 Python: success
-Chromium: failure
+Chromium: success
 
 --- Logs dos testes Python ---
 test_contagens_e_consistencia (test_pipeline.TesteIndicadores.test_contagens_e_consistencia) ... ok
@@ -12,32 +12,8 @@ test_pdf_v51_reproduzivel (test_publicacao.TestPublicacao.test_pdf_v51_reproduzi
 test_scripts_ids_e_dados (test_publicacao.TestPublicacao.test_scripts_ids_e_dados) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.542s
+Ran 6 tests in 0.528s
 
 OK
 --- Logs do navegador ---
-  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/playwright/_impl/_frame.py", line 598, in _click
-    await self._channel.send("click", self._timeout, locals_to_params(locals()))
-  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/playwright/_impl/_connection.py", line 78, in send
-    return await self._connection.wrap_api_call(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/playwright/_impl/_connection.py", line 636, in wrap_api_call
-    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
-playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator("#mobileMenu")
-    - locator resolved to <button type="button" id="mobileMenu" class="mobile-menu" aria-label="Abrir menu">☰</button>
-  - attempting click action
-    2 × waiting for element to be visible, enabled and stable
-      - element is not visible
-    - retrying click action
-    - waiting 20ms
-    2 × waiting for element to be visible, enabled and stable
-      - element is not visible
-    - retrying click action
-      - waiting 100ms
-    58 × waiting for element to be visible, enabled and stable
-       - element is not visible
-     - retrying click action
-       - waiting 500ms
-
+OK: navegação, filtros e responsividade testados com Chromium
