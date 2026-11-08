@@ -25,7 +25,9 @@ def run():
         page.locator('button[data-page="engineering"]').click()
         page.locator('#resetFilters').click()
         page.set_viewport_size({'width':390,'height':844})
-        page.locator('#mobileMenu').click()
+        assert page.locator('.sidebar .menu').is_visible(), 'Navegação horizontal móvel não está visível'
+        page.locator('button[data-page="overview"]').click()
+        assert 'active' in page.locator('button[data-page="overview"]').get_attribute('class')
 
         assert not errors,'Erros de JavaScript: '+repr(errors)
         browser.close()
