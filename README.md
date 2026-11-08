@@ -1,4 +1,4 @@
-# Case 01 | Customer Experience & Eficiência Operacional · V4
+# Case 01 | Customer Experience & Eficiência Operacional · V5
 
 [**Abrir dashboard interativo**](https://wandersonlimas.github.io/portfolio-cx-eficiencia/) · [**Código-fonte no GitHub**](https://github.com/Wandersonlimas/portfolio-cx-eficiencia)
 
@@ -6,9 +6,9 @@
 **Natureza:** projeto demonstrativo gerado com apoio de IA, para estudo, revisão e apresentação de competências analíticas.  
 **Dados:** 100% sintéticos, sem qualquer ligação com informações reais de empresas, clientes, contratos ou pessoas.
 
-## Dashboard V4: interface modernizada
+## Dashboard V5: interface clara e responsiva
 
-A versão pública apresenta identidade noturna grafite, azul-petróleo, verde-água, lavanda e cobre suave, navegação lateral por cinco áreas, filtros globais, gráficos SVG com exploração por mouse, gráficos de distribuição por canal e painel executivo com volume de contatos, NPS, CSAT, recontato e CTS.
+A versão pública apresenta identidade visual clara em marfim, ameixa, lilás e coral, navegação horizontal em cinco áreas, filtros globais, gráficos SVG com interação e distribuição por canal. Mantém os mesmos 792 registros sintéticos, indicadores ponderados e simulação de eficiência. O site foi recompilado a partir dos módulos HTML/CSS/JavaScript e passou por verificações estáticas de integridade dos scripts.
 
 - **Visão executiva:** cinco KPIs ponderados, minigráficos, série temporal selecionável, composição dos canais, ranking de recontatos e insights determinísticos.
 - **Performance:** quatro séries temporais selecionáveis com tooltip e tabela mensal auditável.
