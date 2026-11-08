@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090f18">
+<meta name="description" content="Case técnico demonstrativo em CX, NPS, CSAT, recontato e Cost to Serve com Python, SQLite, ETL e BI. Dados 100% sintéticos.">
+<title>Case 01 | Customer Experience Intelligence</title>
+<style>{{CSS}}</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" aria-label="Navegação principal">
+    <div class="brand">
+      <div class="monogram" aria-hidden="true"><span>W</span><i></i></div>
+      <div><strong>WL<span class="brand-dot">.</span> LAB</strong><small>DATA INTELLIGENCE</small></div>
+    </div>
+    <div class="sidebar-label">PORTFÓLIO / CASE 01</div>
+    <div class="sidebar-project"><span class="project-icon">◈</span><div><strong>Customer Experience</strong><small>Performance & Efficiency</small></div></div>
+    <div class="nav-caption">WORKSPACE</div>
+    <nav class="menu" aria-label="Áreas do painel">
+      <button type="button" class="nav-item active" data-page="overview" aria-current="page"><span class="nav-glyph">◫</span><span>Visão executiva</span><span class="nav-index">01</span></button>
+      <button type="button" class="nav-item" data-page="trends"><span class="nav-glyph">⌁</span><span>Performance</span><span class="nav-index">02</span></button>
+      <button type="button" class="nav-item" data-page="diagnostics"><span class="nav-glyph">⊞</span><span>Diagnóstico</span><span class="nav-index">03</span></button>
+      <button type="button" class="nav-item" data-page="scenarios"><span class="nav-glyph">◎</span><span>Simulador</span><span class="nav-index">04</span></button>
+      <button type="button" class="nav-item" data-page="engineering"><span class="nav-glyph">⌘</span><span>Arquitetura</span><span class="nav-index">05</span></button>
+    </nav>
+    <div class="side-bottom">
+      <div class="side-status"><span class="pulse"></span><div><b>AMBIENTE DE TESTES</b><small>Dataset sintético / sem API</small></div></div>
+      <a href="https://github.com/Wandersonlimas/portfolio-cx-eficiencia" target="_blank" rel="noopener noreferrer" class="repo-link">Código-fonte <span>↗</span></a>
+      <div class="side-signature">WANDERSON LIMAS <span>© 2026</span></div>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <div class="breadcrumbs"><button id="mobileMenu" class="mobile-menu" type="button" aria-label="Abrir menu">☰</button><span class="crumb-home">PORTFÓLIO</span><span class="crumb-sep">/</span><strong>CASE 01</strong><span class="crumb-sep">/</span><span id="crumbPage">VISÃO EXECUTIVA</span></div>
+      <div class="topbar-right"><span class="topbar-clock">EXPLORAÇÃO INTERATIVA</span><span class="data-pill"><span class="pulse"></span> AMBIENTE DEMONSTRATIVO</span><a class="topbar-github" href="https://github.com/Wandersonlimas/portfolio-cx-eficiencia" target="_blank" rel="noopener noreferrer" aria-label="Abrir código no GitHub">↗</a></div>
+    </header>
+    <main class="content">
+      <div class="intro">
+        <div><div class="eyebrow"><span class="bar"></span> CUSTOMER EXPERIENCE INTELLIGENCE <span class="eyebrow-right">/ ESTUDO APLICADO</span></div><h1>Experiência do cliente.<br><span>Decisões orientadas por dados.</span></h1><p>Inteligência operacional, qualidade e custo em uma visão integrada. Métricas ponderadas, recortes auditáveis e hipóteses de investigação.</p></div>
+        <div class="intro-meta"><div class="version-label">CASE STUDY <span>V4.0</span></div><div class="timeline">JAN 2025 <span>→</span> OUT 2026</div><div class="meta-foot">22 meses de dados sintéticos</div></div>
+      </div>
+      <section class="filters" aria-label="Filtros globais do painel">
+        <div class="filter-title"><div><span class="filter-gear">✧</span> FILTROS GLOBAIS <small>Todos os indicadores respondem à seleção</small></div><span class="filter-count" id="filterCount" aria-live="polite">Carregando...</span></div>
+        <div class="filter-grid">
+          <label>PERÍODO<select id="periodo"><option value="6">Últimos 6 meses</option><option value="12">Últimos 12 meses</option><option value="2026">Ano de 2026</option><option value="2025">Ano de 2025</option><option value="all">Todo o período</option></select></label>
+          <label>CANAL<select id="canal"><option value="Todos">Todos os canais</option></select></label>
+          <label>MOTIVO DE CONTATO<select id="motivo"><option value="Todos">Todos os motivos</option></select></label>
+          <label>OPERADOR<select id="parceiro"><option value="Todos">Todos os operadores</option></select></label>
+          <button id="resetFilters" type="button" class="reset-btn" title="Restaurar filtros iniciais">↺ <span>Limpar</span></button>
+        </div>
+      </section>
+      <section class="page active" id="page-overview" aria-label="Visão executiva">
+        <div class="section-line"><div><span class="section-code">01 /</span><h2>Pulso da operação</h2><span class="section-desc">Indicadores recalculados no recorte selecionado</span></div><span class="period-tag" id="periodSummary">MAI 2026 — OUT 2026</span></div>
+        <div class="kpi-grid" id="kpiGrid" aria-live="polite"></div>
+        <div class="dashboard-grid">
+          <article class="panel chart-panel"><div class="panel-heading"><div><div class="panel-kicker">ANÁLISE DE TENDÊNCIA</div><h3>Evolução mensal dos indicadores</h3><p>Comportamento do período, com denominadores recalculados</p></div><span class="chart-accent">LIVE ANALYTICS <i></i></span></div><div class="metric-switch" id="metricSwitch" aria-label="Selecionar métrica"><button class="metric-option active" data-metric="nps" type="button">NPS</button><button class="metric-option" data-metric="csat" type="button">CSAT</button><button class="metric-option" data-metric="recontato" type="button">Recontato</button><button class="metric-option" data-metric="cts" type="button">Cost to Serve</button></div><div class="chart-wrap"><div class="chart-legend" id="chartLegend"></div><svg id="mainChart" viewBox="0 0 830 300" role="img" aria-label="Gráfico mensal de performance"><title>Evolução dos indicadores por mês</title></svg><div class="chart-tooltip" id="chartTooltip" hidden></div></div><div class="chart-footer"><span><i class="dot mint"></i> Série ponderada por mês</span><span id="chartObservation">Base sintética / 2026</span></div></article>
+          <article class="panel mix-panel"><div class="panel-heading"><div><div class="panel-kicker">COMPOSIÇÃO OPERACIONAL</div><h3>Mix por canal</h3><p>Participação dos contatos no recorte</p></div></div><div class="donut-area"><div class="donut" id="channelDonut"><div class="donut-hole"><span id="donutTotal">--</span><small>CONTATOS</small></div></div></div><div id="channelLegend" class="channel-legend"></div><div class="mix-foot"><span>Maior volume</span><strong id="leadingChannel">--</strong></div></article>
+        </div>
+        <div class="bottom-grid">
+          <article class="panel compact-panel"><div class="panel-heading"><div><div class="panel-kicker">PONTOS DE ATRITO</div><h3>Concentração de recontatos</h3><p>Ranking por quantidade absoluta de retornos</p></div><button class="text-action" data-go="diagnostics" type="button">Explorar diagnóstico ↗</button></div><div id="reasonPareto" class="pareto"></div></article>
+          <article class="panel compact-panel"><div class="panel-heading"><div><div class="panel-kicker">LEITURA EXECUTIVA</div><h3>Sinais para investigação</h3><p>Observações extraídas das regras dos dados</p></div></div><div id="executiveSignals" class="executive-signals"></div><div class="insight-disclaimer">Análises descritivas, sem causalidade comprovada.</div></article>
+        </div>
+      </section>
+      <section class="page" id="page-trends" aria-label="Performance mensal">
+        <div class="section-line"><div><span class="section-code">02 /</span><h2>Performance & tendências</h2><span class="section-desc">Relação entre satisfação, retrabalho e custo</span></div><span class="period-tag">EVOLUÇÃO MENSAL</span></div>
+        <div class="trends-grid"><article class="panel"><div class="panel-heading"><div><div class="panel-kicker">LINHA DE TEMPO</div><h3>Leitura de performance</h3><p>Selecione um indicador para acompanhar a série</p></div></div><div class="metric-switch" id="metricSwitchDetailed"><button class="metric-option active" data-metric="nps">NPS</button><button class="metric-option" data-metric="csat">CSAT</button><button class="metric-option" data-metric="recontato">Recontato</button><button class="metric-option" data-metric="cts">CTS</button></div><div class="chart-wrap"><div class="chart-legend" id="detailChartLegend"></div><svg id="detailChart" viewBox="0 0 830 300" aria-label="Série temporal selecionada"></svg><div class="chart-tooltip" id="detailChartTooltip" hidden></div></div></article><article class="panel trend-context"><div class="panel-kicker">INTERPRETAÇÃO</div><h3>O que observar</h3><div class="context-stack"><div class="context-item"><span>01</span><div><b>Taxas e denominadores</b><p>NPS é calculado pelas respostas válidas; CSAT pela amostra de satisfação. A média simples das taxas distorce resultados.</p></div></div><div class="context-item"><span>02</span><div><b>Mix da operação</b><p>Variações de canais, motivos e operadores mudam a composição do agregado e exigem leitura segmentada.</p></div></div><div class="context-item"><span>03</span><div><b>Descontinuidades simuladas</b><p>Pontos de deterioração foram introduzidos no gerador para exercitar a identificação de hipóteses.</p></div></div></div></article></div>
+        <article class="panel table-panel"><div class="panel-heading"><div><div class="panel-kicker">AUDITORIA TEMPORAL</div><h3>Série consolidada por mês</h3><p>Todos os dados referem-se ao recorte de filtros atual</p></div></div><div class="table-scroller"><table class="data-table"><thead><tr><th>MÊS</th><th>CONTATOS</th><th>RECONTATOS</th><th>NPS</th><th>CSAT</th><th>RECONTATO</th><th>CTS</th></tr></thead><tbody id="monthlyTable"></tbody></table></div></article>
+      </section>
+      <section class="page" id="page-diagnostics" aria-label="Diagnóstico por segmentos">
+        <div class="section-line"><div><span class="section-code">03 /</span><h2>Diagnóstico de experiência</h2><span class="section-desc">Quebra por motivo, canal e operador</span></div><span class="period-tag">ANÁLISE MULTIDIMENSIONAL</span></div>
+        <div class="diagnostics-grid"><article class="panel table-panel"><div class="panel-heading"><div><div class="panel-kicker">OFENSORES</div><h3>Motivos de contato</h3><p>Priorizar exige cruzar taxa com volume absoluto</p></div></div><div class="table-scroller"><table class="data-table"><thead><tr><th>MOTIVO</th><th>CONTATOS</th><th>RETORNOS</th><th>RECONTATO</th><th>PARTICIPAÇÃO</th><th>CTS</th></tr></thead><tbody id="reasonsTable"></tbody></table></div></article><article class="panel table-panel"><div class="panel-heading"><div><div class="panel-kicker">DISTRIBUIÇÃO</div><h3>Canais de atendimento</h3><p>Visão ponderada por volume e pesquisas</p></div></div><div class="table-scroller"><table class="data-table"><thead><tr><th>CANAL</th><th>CONTATOS</th><th>NPS</th><th>RECONTATO</th><th>CTS</th></tr></thead><tbody id="channelsTable"></tbody></table></div></article></div>
+        <div class="diagnostics-grid"><article class="panel"><div class="panel-heading"><div><div class="panel-kicker">PARCEIROS</div><h3>Comparativo por operador</h3><p>Indicadores sintéticos, sem avaliação de fornecedores reais</p></div></div><div id="partnerCards" class="partner-grid"></div></article><article class="panel"><div class="panel-heading"><div><div class="panel-kicker">SÍNTESE</div><h3>Hipóteses para validação</h3></div></div><div id="diagnosticInsights" class="analysis-list"></div></article></div>
+      </section>
+      <section class="page" id="page-scenarios" aria-label="Simulador de eficiência">
+        <div class="section-line"><div><span class="section-code">04 /</span><h2>Laboratório de eficiência</h2><span class="section-desc">Simulações aritméticas com premissas explícitas</span></div><span class="period-tag">WHAT-IF ANALYSIS</span></div>
+        <div class="scenario-hero"><div class="scenario-label">EXPERIMENTO HIPOTÉTICO</div><h3>Qual seria a exposição de custo variável<br>associada a recontatos potencialmente evitáveis?</h3><p>Selecione uma proporção hipotética de retornos evitáveis. O resultado não representa economia realizada, redução garantida de orçamento ou projeção estatística.</p></div>
+        <div class="scenario-grid"><article class="panel scenario-control"><div class="panel-kicker">01 / PREMISSA</div><div class="scenario-control-head"><h3>Redução hipotética de recontato</h3><strong id="scenarioPct">20%</strong></div><input id="scenarioSlider" type="range" min="0" max="40" step="5" value="20" aria-label="Percentual hipotético de recontatos evitáveis"><div class="slider-labels"><span>0%</span><span>10%</span><span>20%</span><span>30%</span><span>40%</span></div><div class="scenario-components"><div><small>RETORNOS NO RECORTE</small><strong id="scenarioReturns">--</strong></div><div><small>CUSTO VARIÁVEL / CONTATO</small><strong id="scenarioUnitCost">--</strong></div></div></article><article class="panel result-card"><div class="panel-kicker">02 / RESULTADO ILUSTRATIVO</div><div class="result-label">Proxy de custo variável associado</div><div class="result-value" id="scenarioAmount">--</div><div class="result-rule"></div><div class="result-bottom"><div><small>RETORNOS HIPOTETICAMENTE EVITADOS</small><strong id="scenarioAvoided">--</strong></div><div><small>RECONTATOS REMANESCENTES</small><strong id="scenarioRemain">--</strong></div></div></article></div><div class="method-note"><span>ⓘ</span><p><strong>Limite do modelo:</strong> não considera custos de implantação, capacidade contratada, efeitos indiretos ou efetiva possibilidade de reduzir gastos. É uma exposição teórica de custo variável, não savings comprovado.</p></div>
+      </section>
+      <section class="page" id="page-engineering" aria-label="Metodologia e arquitetura">
+        <div class="section-line"><div><span class="section-code">05 /</span><h2>Engenharia & rastreabilidade</h2><span class="section-desc">Como os dados percorrem o pipeline até o painel</span></div><span class="period-tag">DOCUMENTAÇÃO TÉCNICA</span></div>
+        <article class="panel engineering-panel"><div class="panel-heading"><div><div class="panel-kicker">ARQUITETURA DE DADOS</div><h3>Pipeline reproduzível</h3><p>Processamento local, sem serviços externos obrigatórios</p></div></div><div class="pipeline"><div class="pipeline-step"><span>01 / INPUT</span><b>CSV sintético</b><small>792 grupos agregados</small></div><div class="pipeline-arrow">→</div><div class="pipeline-step"><span>02 / QUALITY</span><b>Validação Python</b><small>Chaves, intervalos, custos</small></div><div class="pipeline-arrow">→</div><div class="pipeline-step"><span>03 / TRANSFORM</span><b>SQLite + ETL</b><small>Métricas ponderadas</small></div><div class="pipeline-arrow">→</div><div class="pipeline-step"><span>04 / DATA MART</span><b>JSON analítico</b><small>Recortes e agregações</small></div><div class="pipeline-arrow">→</div><div class="pipeline-step"><span>05 / DELIVERY</span><b>Dashboard HTML</b><small>Offline / GitHub Pages</small></div></div></article>
+        <div class="method-cards"><article class="panel"><span>01 / INDICADORES</span><h3>Definições matemáticas</h3><div class="formula"><b>NPS</b><code>100 × (promotores − detratores) / respondentes NPS</code></div><div class="formula"><b>CSAT</b><code>100 × respostas positivas / respondentes CSAT</code></div><div class="formula"><b>Recontato</b><code>100 × contatos repetidos / contatos</code></div><div class="formula"><b>CTS</b><code>custo total (R$) / total de contatos</code></div></article><article class="panel"><span>02 / CONTROLE</span><h3>Qualidade e limites</h3><p>Chave de agregação: mês × canal × motivo × operador. Totalizações por soma de numeradores e denominadores antes do cálculo da taxa. Desvios simulados servem para testar leitura analítica.</p><p>Não há identificadores individuais, pesquisas reais, comprovação causal, custo observado de intervenções ou evidências de resultados empresariais.</p><button type="button" id="exportCsv" class="export-btn">↓ Exportar recorte filtrado (CSV)</button></article></div>
+        <div class="footer-refs"><a href="https://github.com/Wandersonlimas/portfolio-cx-eficiencia/blob/main/METODOLOGIA.md" target="_blank" rel="noopener noreferrer">Metodologia completa ↗</a><a href="https://github.com/Wandersonlimas/portfolio-cx-eficiencia" target="_blank" rel="noopener noreferrer">Explorar repositório ↗</a></div>
+      </section>
+      <footer class="footer"><span>CASE 01 / CX & OPERATIONAL INTELLIGENCE</span><span>Dados 100% sintéticos · Estudo demonstrativo desenvolvido com assistência de IA · Nenhum resultado real de empresa</span></footer>
+    </main>
+  </div>
+</div>
+<script>window.DATA_ROWS={{DATA}};</script>
+<script>{{JS}}
+</script>
+</body>
+</html>
