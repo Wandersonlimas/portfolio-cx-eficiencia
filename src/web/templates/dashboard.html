@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090f18">
+<meta name="theme-color" content="#f8f6f3">
 <meta name="description" content="Case técnico demonstrativo em CX, NPS, CSAT, recontato e Cost to Serve com Python, SQLite, ETL e BI. Dados 100% sintéticos.">
-<title>Case 01 | Customer Experience Intelligence</title>
+<title>Case 01 | Customer Experience & Eficiência Operacional</title>
 <style>{{CSS}}</style>
 </head>
 <body>
@@ -13,7 +13,7 @@
   <aside class="sidebar" aria-label="Navegação principal">
     <div class="brand">
       <div class="monogram" aria-hidden="true"><span>W</span><i></i></div>
-      <div><strong>WL<span class="brand-dot">.</span> LAB</strong><small>DATA INTELLIGENCE</small></div>
+      <div><strong>WL<span class="brand-dot">.</span> STUDIO</strong><small>CX · DATA INTELLIGENCE</small></div>
     </div>
     <div class="sidebar-label">PORTFÓLIO / CASE 01</div>
     <div class="sidebar-project"><span class="project-icon">◈</span><div><strong>Customer Experience</strong><small>Performance & Efficiency</small></div></div>
@@ -38,8 +38,8 @@
     </header>
     <main class="content">
       <div class="intro">
-        <div><div class="eyebrow"><span class="bar"></span> CUSTOMER EXPERIENCE INTELLIGENCE <span class="eyebrow-right">/ ESTUDO APLICADO</span></div><h1>Experiência do cliente.<br><span>Decisões orientadas por dados.</span></h1><p>Inteligência operacional, qualidade e custo em uma visão integrada. Métricas ponderadas, recortes auditáveis e hipóteses de investigação.</p></div>
-        <div class="intro-meta"><div class="version-label">CASE STUDY <span>V4.0</span></div><div class="timeline">JAN 2025 <span>→</span> OUT 2026</div><div class="meta-foot">22 meses de dados sintéticos</div></div>
+        <div><div class="eyebrow"><span class="bar"></span> CUSTOMER EXPERIENCE INTELLIGENCE <span class="eyebrow-right">/ ESTUDO APLICADO</span></div><h1>Experiência do cliente.<br><span>Inteligência operacional.</span></h1><p>Inteligência operacional, qualidade e custo em uma visão integrada. Métricas ponderadas, recortes auditáveis e hipóteses de investigação.</p></div>
+        <div class="intro-meta"><div class="version-label">CASE STUDY <span>V5.0</span></div><div class="timeline">JAN 2025 <span>→</span> OUT 2026</div><div class="meta-foot">22 meses de dados sintéticos</div></div>
       </div>
       <section class="filters" aria-label="Filtros globais do painel">
         <div class="filter-title"><div><span class="filter-gear">✧</span> FILTROS GLOBAIS <small>Todos os indicadores respondem à seleção</small></div><span class="filter-count" id="filterCount" aria-live="polite">Carregando...</span></div>
@@ -55,7 +55,7 @@
         <div class="section-line"><div><span class="section-code">01 /</span><h2>Pulso da operação</h2><span class="section-desc">Indicadores recalculados no recorte selecionado</span></div><span class="period-tag" id="periodSummary">MAI 2026 — OUT 2026</span></div>
         <div class="kpi-grid" id="kpiGrid" aria-live="polite"></div>
         <div class="dashboard-grid">
-          <article class="panel chart-panel"><div class="panel-heading"><div><div class="panel-kicker">ANÁLISE DE TENDÊNCIA</div><h3>Evolução mensal dos indicadores</h3><p>Comportamento do período, com denominadores recalculados</p></div><span class="chart-accent">LIVE ANALYTICS <i></i></span></div><div class="metric-switch" id="metricSwitch" aria-label="Selecionar métrica"><button class="metric-option active" data-metric="nps" type="button">NPS</button><button class="metric-option" data-metric="csat" type="button">CSAT</button><button class="metric-option" data-metric="recontato" type="button">Recontato</button><button class="metric-option" data-metric="cts" type="button">Cost to Serve</button></div><div class="chart-wrap"><div class="chart-legend" id="chartLegend"></div><svg id="mainChart" viewBox="0 0 830 300" role="img" aria-label="Gráfico mensal de performance"><title>Evolução dos indicadores por mês</title></svg><div class="chart-tooltip" id="chartTooltip" hidden></div></div><div class="chart-footer"><span><i class="dot mint"></i> Série ponderada por mês</span><span id="chartObservation">Base sintética / 2026</span></div></article>
+          <article class="panel chart-panel"><div class="panel-heading"><div><div class="panel-kicker">ANÁLISE DE TENDÊNCIA</div><h3>Evolução mensal dos indicadores</h3><p>Comportamento do período, com denominadores recalculados</p></div><span class="chart-accent">ANÁLISE INTERATIVA <i></i></span></div><div class="metric-switch" id="metricSwitch" aria-label="Selecionar métrica"><button class="metric-option active" data-metric="nps" type="button">NPS</button><button class="metric-option" data-metric="csat" type="button">CSAT</button><button class="metric-option" data-metric="recontato" type="button">Recontato</button><button class="metric-option" data-metric="cts" type="button">Cost to Serve</button></div><div class="chart-wrap"><div class="chart-legend" id="chartLegend"></div><svg id="mainChart" viewBox="0 0 830 300" role="img" aria-label="Gráfico mensal de performance"><title>Evolução dos indicadores por mês</title></svg><div class="chart-tooltip" id="chartTooltip" hidden></div></div><div class="chart-footer"><span><i class="dot mint"></i> Série ponderada por mês</span><span id="chartObservation">Base sintética / 2026</span></div></article>
           <article class="panel mix-panel"><div class="panel-heading"><div><div class="panel-kicker">COMPOSIÇÃO OPERACIONAL</div><h3>Mix por canal</h3><p>Participação dos contatos no recorte</p></div></div><div class="donut-area"><div class="donut" id="channelDonut"><div class="donut-hole"><span id="donutTotal">--</span><small>CONTATOS</small></div></div></div><div id="channelLegend" class="channel-legend"></div><div class="mix-foot"><span>Maior volume</span><strong id="leadingChannel">--</strong></div></article>
         </div>
         <div class="bottom-grid">
