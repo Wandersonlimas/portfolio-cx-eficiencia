@@ -1,4 +1,4 @@
-"""Compila o Case 01 V5 com frontend modular e dados sintéticos do ETL.
+"""Compila o Case 01 V5.1 com frontend modular e dados sintéticos do ETL.
 Uso: python codigo/construir_dashboard.py
 """
 import json
@@ -29,8 +29,8 @@ def construir(base=ROOT):
     if 'window.DATA_ROWS=' not in html:
         raise ValueError('Dados não foram incorporados')
     (base/'index.html').write_text(html,encoding='utf-8')
-    (base/'entregaveis'/'Dashboard_CX_Case_Tecnico_V4.html').write_text(html,encoding='utf-8')
+    (base/'entregaveis'/'Dashboard_CX_Case_Tecnico_V5_1.html').write_text(html,encoding='utf-8')
     return html
 
 if __name__=='__main__':
-    print('Dashboard V5 gerado:',len(construir()),'caracteres')
+    print('Dashboard V5.1 gerado:',len(construir()),'caracteres')
