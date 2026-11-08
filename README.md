@@ -31,7 +31,6 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 | Local | Conteúdo |
 |---|---|
 | `entregaveis/Relatorio_Executivo_CX_V5_1.pdf` | Relatório executivo V5.1 em PDF, com o novo design e links clicáveis |
-| `entregaveis/Relatorio_Executivo_CX_V2.pdf` | Versão histórica do relatório executivo, com a identidade anterior |
 | `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html` | Dashboard V5.1 offline autocontido, idêntico à versão pública |
 | `index.html` | Dashboard V5.1 público, publicado pelo GitHub Pages na raiz `/` |
 | `dados/contatos_sinteticos.csv` | Fonte agregada com 792 observações |
@@ -40,7 +39,7 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 | `codigo/processar_etl.py` | Valida dados, agrega SQLite, calcula métricas ponderadas e exporta JSON |
 | `codigo/consultas.sql` | Exemplos de queries reexecutáveis no SQLite após criação da tabela |
 | `codigo/construir_dashboard.py` | Compila a interface V5.1 a partir do frontend modular e do CSV validado |
-| `codigo/gerar_relatorio.py` | Gera o PDF a partir do CSV processado |
+| `codigo/gerar_relatorio.py` | Gera o relatório V5.1, com paleta clara e links clicáveis, a partir do CSV validado |
 | `src/web/templates/dashboard.html` | Estrutura HTML editável e documentada do dashboard V5.1 |
 | `src/web/css/dashboard.css` | Design system responsivo em CSS puro |
 | `src/web/js/dashboard.js` | Filtros, séries, KPIs, exportação, análises e simulador |
@@ -52,7 +51,7 @@ Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. 
 
 **Para apenas visualizar**, acesse o [dashboard online](https://wandersonlimas.github.io/portfolio-cx-eficiencia/) ou abra `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html` no Chrome. Ele funciona offline, sem acesso à rede. Use os filtros de período, canal, motivo e operador e o simulador de redução de recontatos.
 
-**Para reproduzir os dados, dashboard e PDF**, é necessário Python 3 e ReportLab:
+**Para reproduzir os dados, dashboard e PDF V5.1**, é necessário Python 3 e ReportLab:
 
 ```bash
 python3 -m pip install reportlab
@@ -70,7 +69,13 @@ python codigo/executar_projeto.py
 python -m unittest discover -s testes -v
 ```
 
-O gerador usa semente determinística, de modo que os valores serão reproduzíveis com as mesmas dependências e dados. `codigo/construir_dashboard.py` atualiza `index.html` e a cópia offline `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html`. O script `codigo/gerar_relatorio.py` ainda gera o **relatório histórico V2**, enquanto o PDF visual V5.1 está disponível como entrega consolidada, não sendo gerado por esse script. O `index.html` da raiz continua sendo a fonte publicada pelo GitHub Pages.
+O gerador usa semente determinística, de modo que os valores serão reproduzíveis com as mesmas dependências e dados. `codigo/construir_dashboard.py` atualiza `index.html` e a cópia offline `entregaveis/Dashboard_CX_Case_Tecnico_V5_1.html`. O script `codigo/gerar_relatorio.py` agora gera `entregaveis/Relatorio_Executivo_CX_V5_1.pdf`, com oito páginas, identidade visual clara e links clicáveis. A versão hospedada no repositório permanece a publicada até que a geração seja executada e o arquivo resultante seja enviado ao GitHub. O `index.html` da raiz continua sendo a fonte publicada pelo GitHub Pages.
+
+## Testes automatizados
+
+A cada atualização na branch `main`, o GitHub Actions executa os testes de integração disponíveis em `testes/`. Os testes verificam base sintética, cálculos ponderados, integridade dos arquivos HTML, sintaxe de scripts (quando Node está disponível) e geração de um PDF V5.1 de oito páginas com links clicáveis.
+
+[Ver resultados dos testes no GitHub Actions](https://github.com/Wandersonlimas/portfolio-cx-eficiencia/actions/workflows/auditoria-tecnica.yml). A existência do workflow não equivale a execução aprovada; confirme o status antes de declarar os testes funcionais concluídos.
 
 ## Como interpretar o dashboard
 
