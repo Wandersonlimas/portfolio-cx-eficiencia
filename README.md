@@ -1,4 +1,4 @@
-# Case 01 | Customer Experience & Eficiência Operacional · V5
+# Case 01 | Customer Experience & Eficiência Operacional · V5.1
 
 [**Abrir dashboard interativo**](https://wandersonlimas.github.io/portfolio-cx-eficiencia/) · [**Código-fonte no GitHub**](https://github.com/Wandersonlimas/portfolio-cx-eficiencia)
 
@@ -6,9 +6,9 @@
 **Natureza:** projeto demonstrativo gerado com apoio de IA, para estudo, revisão e apresentação de competências analíticas.  
 **Dados:** 100% sintéticos, sem qualquer ligação com informações reais de empresas, clientes, contratos ou pessoas.
 
-## Dashboard V5: interface clara e responsiva
+## Dashboard V5.1: layout lateral claro e responsivo
 
-A versão pública apresenta identidade visual clara em marfim, ameixa, lilás e coral, navegação horizontal em cinco áreas, filtros globais, gráficos SVG com interação e distribuição por canal. Mantém os mesmos 792 registros sintéticos, indicadores ponderados e simulação de eficiência. O site foi recompilado a partir dos módulos HTML/CSS/JavaScript e passou por verificações estáticas de integridade dos scripts.
+A versão pública apresenta identidade visual clara em marfim, ameixa, lilás e coral, menu lateral fixo nas telas grandes e navegação horizontal no celular, com cinco áreas, filtros globais, gráficos SVG com interação e distribuição por canal. Mantém os mesmos 792 registros sintéticos, indicadores ponderados e simulação de eficiência. O site foi recompilado a partir dos módulos HTML/CSS/JavaScript e passou por verificações estáticas de integridade dos scripts.
 
 - **Visão executiva:** cinco KPIs ponderados, minigráficos, série temporal selecionável, composição dos canais, ranking de recontatos e insights determinísticos.
 - **Performance:** quatro séries temporais selecionáveis com tooltip e tabela mensal auditável.
@@ -16,16 +16,16 @@ A versão pública apresenta identidade visual clara em marfim, ameixa, lilás e
 - **Cenários:** simulador de redução hipotética de recontato, sem atribuir economias realizadas.
 - **Engenharia:** fluxo CSV → validação → SQLite/Python → métricas → dashboard/relatório.
 
-Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. O painel foi reconstruído mantendo o algoritmo das métricas e as dimensões de filtro. O frontend V4 é modular em `src/web/`, e `codigo/construir_dashboard.py` compila CSS, JavaScript e registros sintéticos em um único `index.html`.
+Os dados são sempre 100% sintéticos. A página é autocontida e roda offline. O painel foi reconstruído mantendo o algoritmo das métricas e as dimensões de filtro. O frontend é modular em `src/web/`, e `codigo/construir_dashboard.py` compila CSS, JavaScript e registros sintéticos em um único `index.html`.
 
 ## O que está incluído
 
 | Local | Conteúdo |
 |---|---|
 | `entregaveis/Relatorio_Executivo_CX_V2.pdf` | Relatório executivo de 8 páginas para a seção Em destaque do LinkedIn |
-| `entregaveis/Dashboard_CX_Case_Tecnico_V4.html` | Dashboard V4 offline autocontido, idêntico à versão pública |
+| `entregaveis/Dashboard_CX_Case_Tecnico_V4.html` | Dashboard V5.1 offline autocontido, idêntico à versão pública |
 | `entregaveis/Dashboard_CX_Case_Tecnico_V2.html` | Versão V2 anterior, preservada para histórico |
-| `index.html` | Dashboard V4 público, publicado pelo GitHub Pages na raiz `/` |
+| `index.html` | Dashboard V5.1 público, publicado pelo GitHub Pages na raiz `/` |
 | `dados/contatos_sinteticos.csv` | Fonte agregada com 792 observações |
 | `dados/indicadores_processados.json` | Resultados agregados via SQL e Python |
 | `codigo/gerar_dados.py` | Gerador sintético com semente fixa `20261108` |
